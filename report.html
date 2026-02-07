@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagnosis Report</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, rgba(3,10,16,0.55), rgba(2,8,12,0.55)),
+                        url('{{ url_for("static", filename="backgrounds/healthcarebackground.jpg") }}') 
+                        center/cover no-repeat fixed;
+            color: #e8fbff;
+            padding: 40px;
+        }
+
+        .report-box {
+            background: rgba(255,255,255,0.07);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 900px;
+            margin: auto;
+            backdrop-filter: blur(6px);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #a9f7ff;
+            text-align: center;
+        }
+
+        .meta {
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 15px;
+            line-height: 1.4;
+            color: #cfeff2;
+        }
+
+        .meta p {
+            margin: 4px 0;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 22px;
+            background: #0fe0ff;
+            color: #001f21;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background: #0bb7d1;
+        }
+
+        /* NEW: BACK TO HOME button */
+        .home-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 22px;
+            background: linear-gradient(90deg,#13cbd9,#0da3c4);
+            color: #042a2b !important;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .home-btn:hover {
+            opacity: 0.9;
+        }
+
+        .pagination {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .pagination a {
+            color: #c0faff;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="report-box">
+
+    <h2>Your Diagnosis Report</h2>
+
+    {% for r in reports %}
+
+        <!-- DOCTOR, PATIENT, DATE SECTION -->
+        <div class="meta">
+            <p><strong>Doctor:</strong> {{ r.doctor if r.doctor else "Unknown" }}</p>
+            <p><strong>Patient:</strong> {{ r.patient if r.patient else "Unknown" }}</p>
+            <p><strong>Date:</strong> {{ r.timestamp.strftime('%d %b %Y, %I:%M %p') }}</p>
+        </div>
+
+        <!-- AI REPORT TEXT -->
+        <pre>{{ r.report }}</pre>
+
+        <!-- PDF DOWNLOAD BUTTON -->
+        {% if r.report_pdf_path %}
+            <a class="download-btn" href="{{ url_for('serve_pdf', report_id=r._id) }}">
+                Download PDF
+            </a>
+        {% endif %}
+
+        <!-- NEW: BACK TO HOME BUTTON BELOW PDF -->
+        <br>
+        <a class="home-btn" href="{{ url_for('home') }}">⬅ Back to Home</a>
+
+        <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+
+    {% endfor %}
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="?page={{ page - 1 }}">⬅ Previous</a>
+        {% endif %}
+        {% if page < total_pages %}
+            <a href="?page={{ page + 1 }}">Next ➡</a>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>

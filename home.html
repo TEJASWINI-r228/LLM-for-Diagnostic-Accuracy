@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>AI Disease Diagnosis - Home</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root {
+      --accent: #0fe0ff;
+      --card-bg: rgba(6,25,36,0.6);
+      --card-border: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.06);
+    }
+    html,body{height:100%;margin:0;font-family:Inter, 'Segoe UI', Arial, sans-serif;}
+    body {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(15,60,90,0.18), transparent 8%),
+        linear-gradient(180deg, rgba(2,10,16,0.48), rgba(1,6,10,0.48)),
+        url('{{ url_for("static", filename="backgrounds/healthcarebackground.jpg") }}') center/cover no-repeat fixed;
+      color: #e8fbff;
+      padding: 24px;
+    }
+    .card {
+      width: 760px;
+      max-width: calc(100% - 48px);
+      background: var(--glass);
+      border-radius: 14px;
+      padding: 34px;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(6,20,30,0.6);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(6px) saturate(120%);
+    }
+    h1 { font-size: 36px; margin: 0 0 10px; color: #cfffff; font-weight:800; letter-spacing:0.6px;}
+    p { margin: 0 0 22px; color: #dff9fb; opacity: 0.9; }
+    .row { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:8px; }
+    .btn {
+      min-width: 220px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      color: #042a2b;
+      background: linear-gradient(90deg,#13cbd9,#0da3c4);
+      text-decoration: none;
+      box-shadow: 0 8px 20px rgba(8,20,30,0.45);
+      transition: transform .12s ease, box-shadow .12s;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(8,20,30,0.55); }
+    .sub { margin-top: 14px; color: #bff6f7; opacity:0.85; font-size:14px;}
+    .small-links { margin-top: 20px; display:flex; gap:12px; justify-content:center; }
+    .small-links a { color: #bfeef2; text-decoration: none; opacity:0.95; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>AI Disease Diagnosis</h1>
+    <p>Instant AI-assisted medical image analysis — doctor & patient portals with generated clinical reports.</p>
+
+    <div class="row">
+      <a class="btn" href="{{ url_for('doctor_portal') }}">Doctor Portal</a>
+      <a class="btn" href="{{ url_for('patient_portal') }}">Patient Portal</a>
+    </div>
+
+    <div class="sub">Choose a portal to continue</div>
+
+    <div class="small-links">
+      <a href="{{ url_for('doctor_login') }}">Doctor Login</a> ·
+      <a href="{{ url_for('patient_login') }}">Patient Login</a>
+    </div>
+  </div>
+</body>
+</html>
